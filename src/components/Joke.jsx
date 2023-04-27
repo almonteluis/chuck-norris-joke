@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Norris from "../assets/Norris.jpg";
+import Norris from "../assets/norris.jpg";
 import axios from "axios";
 
 const Joke = ({ joke, fetchJoke }) => {
