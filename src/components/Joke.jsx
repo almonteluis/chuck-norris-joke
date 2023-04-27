@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import Norris from "/src/assets/Norris.jpg";
 import axios from "axios";
 
-const Joke = () => {
-  const [joke, setJoke] = useState(""); // This is the state for the joke
+const Joke = ({ joke, fetchJoke }) => {
   const [gettagline, setGetTagline] = useState(""); // This is the state for the tagline
 
   const tagline = {
@@ -22,23 +21,12 @@ const Joke = () => {
   };
 
   useEffect(() => {
-    axios
-      .get("https://api.chucknorris.io/jokes/random")
-      .then((res) => {
-        setJoke(res.data.value);
-      })
-      .catch((err) => {
-        console.log("Error: ", err);
-      });
-  }, []); // This is the effect for the joke
-
-  useEffect(() => {
     const randomTagline = Math.floor(Math.random() * tagline.taglines.length);
     setGetTagline(tagline.taglines[randomTagline]);
   }, [gettagline]); // This is the effect for the tagline
 
   return (
-    <div className='container mx-auto items-center flex flex-wrap mt-5'>
+    <div className='container mx-auto w-full items-center flex flex-wrap mt-5 justify-center'>
       <div className='max-w-sm w-full lg:max-w-full lg:flex'>
         <div
           className='h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden'
@@ -49,7 +37,7 @@ const Joke = () => {
           }}
           title='Woman holding a mug'
         ></div>
-        <div className='border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal'>
+        <div className='w-full border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal'>
           <div className='mb-8'>
             <div className='text-gray-900 font-bold text-xl mb-2'>
               {gettagline}
@@ -58,7 +46,13 @@ const Joke = () => {
           </div>
         </div>
       </div>
-      <div className='font-semibold text-1xl text-slate-500'></div>
+      {/* <div className='font-semibold text-1xl text-slate-500'></div> */}
+      <button
+        onClick={fetchJoke}
+        className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 transition duration-300 ease-in-out block mx-auto'
+      >
+        Get New Joke
+      </button>
     </div>
   );
 };
